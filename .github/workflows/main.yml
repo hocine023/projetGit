@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Installer les dépendances
+      - name: Install dependencies
         run: npm ci
 
   lint:
@@ -35,12 +35,10 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Vérification des dépendances
-        run: |
-          npm list eslint || echo "eslint non installé"
-          npm list vitest || echo "vitest non installé"
+      - name: Verify ESLint installation
+        run: npm list eslint || echo "eslint non installé"
 
-      - name: Lancer ESLint
+      - name: Run ESLint
         run: npm run lint
 
   test:
@@ -56,10 +54,10 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Vérification des dépendances
-        run: npm list vitest
+      - name: Verify Vitest installation
+        run: npm list vitest || echo "vitest non installé"
 
-      - name: Lancer les tests
+      - name: Run tests
         run: npm test
 
   build:
@@ -75,5 +73,5 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Construire le projet
+      - name: Build project
         run: npm run build
