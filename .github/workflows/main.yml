@@ -19,10 +19,16 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Cache npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
-        run: |
-          npm ci --cache .npm --prefer-offline
-          npm install eslint --save-dev # Ensure eslint is installed
+        run: npm ci
 
   lint:
     runs-on: ubuntu-latest
