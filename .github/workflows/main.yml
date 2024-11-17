@@ -19,15 +19,7 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Cache npm
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
+      - name: Installer les dépendances
         run: npm ci
 
   lint:
@@ -43,7 +35,12 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Run ESLint
+      - name: Vérification des dépendances
+        run: |
+          npm list eslint || echo "eslint non installé"
+          npm list vitest || echo "vitest non installé"
+
+      - name: Lancer ESLint
         run: npm run lint
 
   test:
@@ -59,7 +56,10 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Run tests
+      - name: Vérification des dépendances
+        run: npm list vitest
+
+      - name: Lancer les tests
         run: npm test
 
   build:
@@ -75,5 +75,5 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Build project
+      - name: Construire le projet
         run: npm run build
